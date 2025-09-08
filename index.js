@@ -1,6 +1,6 @@
 const express = require("express")
 const cors = require("cors")
-const PORT = 3000
+const PORT = 5000
 require('dotenv').config();
 const mongoose = require("mongoose")
 
@@ -15,6 +15,7 @@ app.use(cors())
 
 
 app.use("/api/auth",usersignup)
+
 
 
 
