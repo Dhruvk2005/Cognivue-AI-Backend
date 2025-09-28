@@ -1,10 +1,24 @@
-const usersignup = require('../models/usersignup')
 const UserSignup = require('../models/usersignup')
 const bcrypt = require("bcryptjs")
+const jwt = require("jsonwebtoken")
+
+const secretKey = process.env.JWT_SECRETKEY
+
+
+
 
 const CreateUser = async (req, res) => {
     try {
         let { name, email, password } = req.body
+
+        const existingUSer = await UserSignup.findOne({ email })
+        if (existingUSer) {
+            return res.json({
+                status: 400,
+                mssg: "User already exists"
+
+            })
+        }
 
         const hashedPassword = await bcrypt.hash(password, 10)
 
@@ -51,10 +65,26 @@ const LoginUser = async (req, res) => {
             })
         }
 
+        const token = jwt.sign(
+            {
+                id: user._id,
+                email: user.email
+            },
+
+            secretKey || "Secret_key",
+            {
+                expiresIn: "1h"
+            }
+
+
+
+        )
+
 
         res.json({
             status: 200,
             mssg: "Login successfull",
+            token,
             data: {
                 id: user.id,
                 name: user.name,
@@ -66,7 +96,7 @@ const LoginUser = async (req, res) => {
 
 
     } catch (err) {
-        res.json({status:500,mssg:err})
+        res.json({ status: 500, mssg: err })
 
     }
 
@@ -74,4 +104,4 @@ const LoginUser = async (req, res) => {
 
 
 
-module.exports ={CreateUser,LoginUser}
+module.exports = { CreateUser, LoginUser }
