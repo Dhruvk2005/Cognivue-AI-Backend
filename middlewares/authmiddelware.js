@@ -1,25 +1,22 @@
-const jwt  = require ("jsonwebtoken")
+const jwt = require("jsonwebtoken");
+const secretKey = process.env.JWT_SECRETKEY || "Secret_key";
 
+const authMiddleware = (req, res, next) => {
+    const authHeader = req.headers["authorization"];
 
-const authMiddleware =(req,res, next)=> {
-    const authHeader = req.header["authorization"]
-    const token = authHeader && authHeader.split("")[1]
-
-    if(!token){
-       return res.json({
-            status:401,
-            mssg:"No token provided"
-        })
+    if (!authHeader) {
+        return res.status(401).json({ status: 401, mssg: "No token provided" });
     }
 
-    jwt.verify(token , process.env.JWT_SECRETKEY || "Secret_key",(err,decoded)=>{
-        if(err){
-            res.status(403).json({mssg:"Invalid token"})
+    const token = authHeader.split(" ")[1];
+
+    jwt.verify(token, secretKey, (err, decoded) => {
+        if (err) {
+            return res.status(403).json({ status: 403, mssg: "Invalid or expired token" });
         }
-        req.user = decoded
+        req.user = decoded;
         next();
-    })
+    });
+};
 
-}
-
-module.exports = authMiddleware
+module.exports = authMiddleware;

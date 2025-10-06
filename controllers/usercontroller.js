@@ -49,9 +49,9 @@ const LoginUser = async (req, res) => {
 
         let { email, password } = req.body
 
-        const user = await usersignup.findOne({ email })
+        const user = await UserSignup.findOne({ email })
         if (!user) {
-            res.json({
+           return res.json({
                 status: 404,
                 mssg: "user not found"
             })
@@ -59,7 +59,7 @@ const LoginUser = async (req, res) => {
 
         const isMatch = await bcrypt.compare(password, user.password)
         if (!isMatch) {
-            res.json({
+           return res.json({
                 status: 400,
                 mssg: "Invalid password"
             })
@@ -80,7 +80,6 @@ const LoginUser = async (req, res) => {
 
         )
 
-
         res.json({
             status: 200,
             mssg: "Login successfull",
@@ -96,7 +95,7 @@ const LoginUser = async (req, res) => {
 
 
     } catch (err) {
-        res.json({ status: 500, mssg: err })
+        res.json({ status: 500, mssg: err.message })
 
     }
 
