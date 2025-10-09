@@ -12,11 +12,15 @@ const uploadFiles = require("./routes/uploadroute")
 
 const app = express()
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin: ["https://cognivue-ai.vercel.app"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+}))
 
 
 app.use("/api/auth", usersignup)
-app.use("/api/upload",uploadFiles)
+app.use("/api/upload", uploadFiles)
 
 
 
