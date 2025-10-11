@@ -6,10 +6,6 @@ const mongoose = require("mongoose")
 
 const mongourl = process.env.MONGO_URL
 
-const usersignup = require("./routes/authroutes")
-const uploadFiles = require("./routes/uploadroute")
-
-
 const app = express()
 app.use(express.json())
 app.use(cors({
@@ -17,6 +13,12 @@ app.use(cors({
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }))
+
+
+const usersignup = require("./routes/authroutes")
+const uploadFiles = require("./routes/uploadroute")
+
+
 
 
 app.use("/api/auth", usersignup)
