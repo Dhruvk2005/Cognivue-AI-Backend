@@ -1,0 +1,4 @@
+fileName,path,mimetype,size,userEmail,uploadedAt
+document1.txt,uploads/document1.txt,text/plain,1234,user1@example.com,2025-10-12T12:00:00Z
+report2.pdf,uploads/report2.pdf,application/pdf,3456,user2@example.com,2025-10-11T10:30:00Z
+image3.png,uploads/image3.png,image/png,7890,user3@example.com,2025-10-10T09:15:00Z

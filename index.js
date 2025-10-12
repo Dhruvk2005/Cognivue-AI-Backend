@@ -30,7 +30,9 @@ app.use("/uploads", express.static("uploads"));
 
 app.use("/api/auth", usersignup)
 app.use("/api/upload", uploadFiles)
+
 app.use("/api/ai",aiRoute)
+
 
 
 
