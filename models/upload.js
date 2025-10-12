@@ -1,18 +1,16 @@
-const mongoose = require("mongoose")
-
+const mongoose = require("mongoose");
 
 const uploadSchema = new mongoose.Schema({
-
-    fileName: String,
-    path: String,
-    mimetype: String,
-    size: Number,
-    uploadedAt: {
-        type: Date,
-        default: Date.now
-    },
-    userEmail: String
-})
+    fileName: { type: String, required: true },
+    path: { type: String, required: true },
+    mimetype: { type: String, required: true },
+    size: { type: Number, required: true },
+    userEmail: { type: String, default: "guest" },
 
 
-module.exports = mongoose.model("Upload", uploadSchema)
+    aiInsights: { type: String, default: "" },
+
+    uploadedAt: { type: Date, default: Date.now },
+});
+
+module.exports = mongoose.model("Upload", uploadSchema);

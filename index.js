@@ -9,10 +9,14 @@ const mongourl = process.env.MONGO_URL
 const app = express()
 app.use(express.json())
 app.use(cors({
-    origin: ["https://cognivue-ai.vercel.app"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true
-}))
+  origin: [
+    "https://cognivue-ai.vercel.app",    
+    "https://cognivue-ai-backend.onrender.com" 
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
+
 
 const aiRoute = require("./routes/ai")
 
@@ -20,6 +24,7 @@ const aiRoute = require("./routes/ai")
 const usersignup = require("./routes/authroutes")
 const uploadFiles = require("./routes/uploadroute")
 
+app.use("/uploads", express.static("uploads"));
 
 
 
