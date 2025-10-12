@@ -3,18 +3,18 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 const axios = require("axios");
-const UploadModel = require("../models/Upload"); // <- make sure you created this model
+const UploadModel = require("../models/upload"); 
 
 const router = express.Router();
 
-// 1️⃣ Setup Multer
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, "uploads/"),
     filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname))
 });
 const upload = multer({ storage });
 
-// 2️⃣ Upload + AI Analyze
+
 router.post("/", upload.single("file"), async (req, res) => {
     try {
         const file = req.file;
