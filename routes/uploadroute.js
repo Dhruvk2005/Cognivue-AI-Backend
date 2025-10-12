@@ -16,12 +16,28 @@ const storage = multer.diskStorage({
 const upload = multer({ storage })
 
 
-router.post("/", upload.single("file"), (req, res) => {
+router.post("/", upload.single("file"), async (req, res) => {
     try {
+        const file = req.file
+
+
+        const newUpload = new upload({
+            filename: file.filename,
+            path: file.path,
+            mimetype: file.mimetype,
+            size: file.size,
+            userEmail: req.body.email || "guest"
+
+        })
+
+        await newUpload.save()
+
+
         console.log(req.file)
         res.json({
+            success: true,
             message: "File uploaded successfully",
-            file: req.file.filename
+            data: newUpload
         })
     } catch (err) {
         res.json({
@@ -30,6 +46,18 @@ router.post("/", upload.single("file"), (req, res) => {
             error: err.message
         })
 
+
+    }
+})
+
+
+router.get("/fetchUploads", async (req, res) => {
+    try {
+        const uploadData = await upload.find().sort({ uploadedAt: -1 });
+        res.json(uploadData);
+
+    } catch (err) {
+        res.status(500).json({ message: "Error fetching uploads" })
 
     }
 })

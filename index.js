@@ -14,6 +14,8 @@ app.use(cors({
     credentials: true
 }))
 
+const aiRoute = require("./routes/ai")
+
 
 const usersignup = require("./routes/authroutes")
 const uploadFiles = require("./routes/uploadroute")
@@ -23,6 +25,8 @@ const uploadFiles = require("./routes/uploadroute")
 
 app.use("/api/auth", usersignup)
 app.use("/api/upload", uploadFiles)
+app.use("/api/ai",aiRoute)
+
 
 
 
