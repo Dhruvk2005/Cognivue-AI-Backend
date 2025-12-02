@@ -19,7 +19,7 @@ app.use(cors({
 
 
 const aiRoute = require("./routes/ai")
-
+const letsChat = require("./routes/aichat")
 
 const usersignup = require("./routes/authroutes")
 const uploadFiles = require("./routes/uploadroute")
@@ -32,10 +32,7 @@ app.use("/api/auth", usersignup)
 app.use("/api/upload", uploadFiles)
 
 app.use("/api/ai",aiRoute)
-
-
-
-
+app.use("/api/aichat",letsChat)
 
 
 mongoose.connect(mongourl).then(() => {
@@ -50,8 +47,6 @@ mongoose.connect(mongourl).then(() => {
 app.get("/", (req, res) => {
     res.send("Hello guys welcome to Congnivue AI")
 })
-
-
 
 
 app.listen(PORT, (err) => {
